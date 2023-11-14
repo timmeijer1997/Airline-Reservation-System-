@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+
+class Passenger
+{
+    public string Name { get; set; }
+    public int SeatNumber { get; set; }
+}
+
+class Flight
+{
+    public string FlightNumber { get; set; }
+    public string DepartureCity { get; set; }
+    public string ArrivalCity { get; set; }
+    public int Capacity { get; set; }
+    public List<Passenger> Passengers { get; set; } = new List<Passenger>();
+
+    public bool ReserveSeat(string name)
+    {
+        if (Passengers.Count < Capacity)
+        {
+            int seatNumber = Passengers.Count + 1;
+            Passengers.Add(new Passenger { Name = name, SeatNumber = seatNumber });
+            Console.WriteLine($"Reservation successful! Your seat number is {seatNumber}");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Sorry, the flight is fully booked.");
+            return false;
+        }
+    }
+
+    public void PrintPassengerList()
+    {
+        Console.WriteLine("Passenger List:");
+        foreach (var passenger in Passengers)
+        {
+            Console.WriteLine($"Seat {passenger.SeatNumber}: {passenger.Name}");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Flight flight1 = new Flight
+        {
+            FlightNumber = "ABC123",
+            DepartureCity = "New York",
+            ArrivalCity = "Los Angeles",
+            Capacity = 3
+        };
+
+        flight1.ReserveSeat("Alice");
+        flight1.ReserveSeat("Bob");
+        flight1.ReserveSeat("Charlie");
+        flight1.PrintPassengerList();
+    }
+}
